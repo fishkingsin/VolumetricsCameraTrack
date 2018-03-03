@@ -1,10 +1,10 @@
-#include "testApp.h"
+#include "ofApp.h"
 string currentCompositionDirectory = "./settings/";
 string info = "Press 1-6 change model \
 press button lock camera to change free mode\
 w,s,a,d move camera forward, backward ,left, right\
 etc..";
-void testApp::initVolumetrics(ofxImageSequencePlayer &_imageSequence)
+void ofApp::initVolumetrics(ofxImageSequencePlayer &_imageSequence)
 {
     volWidth = _imageSequence.getWidth();
     volHeight = _imageSequence.getHeight();
@@ -55,7 +55,7 @@ void testApp::initVolumetrics(ofxImageSequencePlayer &_imageSequence)
     
 }
 //--------------------------------------------------------------
-void testApp::setup(){
+void ofApp::setup(){
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofSetFrameRate(60);
     ofEnableAlphaBlending();
@@ -65,11 +65,11 @@ void testApp::setup(){
     
 	gui.setup("Settings", "defaultGuiSettings.xml");
     
-    gui.add(shouldResetCamera.setup("Reset Camera", ofxParameter<bool>()));
-    gui.add(cameraSpeed.setup("Camera Speed", ofxParameter<float>(), 0, 40));
-    gui.add(cameraRollSpeed.setup("Cam Roll Speed", ofxParameter<float>(), .0, 4));
-    gui.add(shouldSaveCameraPoint.setup("Set Camera Point", ofxParameter<bool>()));
-    gui.add(currentLockCamera.setup("Lock to Track", ofxParameter<bool>()));
+    gui.add(shouldResetCamera.setup("Reset Camera", ofParameter<bool>()));
+    gui.add(cameraSpeed.setup("Camera Speed", ofParameter<float>(), 0, 40));
+    gui.add(cameraRollSpeed.setup("Cam Roll Speed", ofParameter<float>(), .0, 4));
+    gui.add(shouldSaveCameraPoint.setup("Set Camera Point", ofParameter<bool>()));
+    gui.add(currentLockCamera.setup("Lock to Track", ofParameter<bool>()));
     
     gui.loadFromFile("defaultGuiSettings.xml");
 	
@@ -93,7 +93,7 @@ void testApp::setup(){
 	cam.useArrowKeys = false;
 	cam.setFarClip(30000);
 	cam.setScale(1, -1, 1);
-	cam.targetNode.setScale(1,1,1);
+//    cam.targetNode.setScale(1,1,1);
 	cameraTrack.setCamera(cam);
 	cam.loadCameraPosition();
 	cam.maximumY =  120;
@@ -112,7 +112,7 @@ void testApp::setup(){
     
     populateTimelineElements();
 }
-void testApp::populateTimelineElements(){
+void ofApp::populateTimelineElements(){
 	
 	timeline.setPageName("Camera");
 	timeline.addTrack("Camera", &cameraTrack);
@@ -128,7 +128,7 @@ void testApp::populateTimelineElements(){
 }
 
 //--------------------------------------------------------------
-void testApp::update(){
+void ofApp::update(){
 	
 	myVolume.setThreshold(timeline.getValue("Volume Threshold"));
 	
@@ -148,11 +148,11 @@ void testApp::update(){
 	
 	if(currentLockCamera != cameraTrack.lockCameraToTrack){
 		if(!currentLockCamera){
-			cam.targetNode.setPosition(cam.getPosition());
-			cam.targetNode.setOrientation(cam.getOrientationQuat());
-			cam.rotationX = cam.targetXRot = -cam.getHeading();
-			cam.rotationY = cam.targetYRot = -cam.getPitch();
-			cam.rotationZ = -cam.getRoll();
+//            cam.targetNode.setPosition(cam.getPosition());
+//            cam.targetNode.setOrientation(cam.getOrientationQuat());
+//            cam.rotationX = cam.targetXRot = -cam.getHeading();
+//            cam.rotationY = cam.targetYRot = -cam.getPitch();
+//            cam.rotationZ = -cam.getRoll();
 		}
 		cameraTrack.lockCameraToTrack = currentLockCamera;
 	}
@@ -168,7 +168,7 @@ void testApp::update(){
     cam.rollSpeed = cameraRollSpeed;
 }
 //--------------------------------------------------------------
-void testApp::draw(){
+void ofApp::draw(){
 	ofSetBackgroundColor(ofColor::white);
     
     {
@@ -184,25 +184,25 @@ void testApp::draw(){
 	gui.draw();
     timeline.draw();
 }
-void testApp::alignCameraToTrack()
+void ofApp::alignCameraToTrack()
 {
-    cam.targetNode.setPosition(cam.getPosition());
-    cam.targetNode.setOrientation(cam.getOrientationQuat());
-    cam.rotationX = cam.targetXRot = -cam.getHeading();
-    cam.rotationY = cam.targetYRot = -cam.getPitch();
-    cam.rotationZ = -cam.getRoll();
+//    cam.targetNode.setPosition(cam.getPosition());
+//    cam.targetNode.setOrientation(cam.getOrientationQuat());
+//    cam.rotationX = cam.targetXRot = -cam.getHeading();
+//    cam.rotationY = cam.targetYRot = -cam.getPitch();
+//    cam.rotationZ = -cam.getRoll();
 
 }
 //--------------------------------------------------------------
-void testApp::resetCameraPosition(){
-    cam.targetNode.setPosition(ofVec3f());
-    cam.targetNode.setOrientation(ofQuaternion());
-    cam.targetXRot = -180;
-    cam.targetYRot = 0;
-    cam.rotationZ = 0;
+void ofApp::resetCameraPosition(){
+//    cam.targetNode.setPosition(ofVec3f());
+//    cam.targetNode.setOrientation(ofQuaternion());
+//    cam.targetXRot = -180;
+//    cam.targetYRot = 0;
+//    cam.rotationZ = 0;
 }
 //--------------------------------------------------------------
-void testApp::keyPressed(int key){
+void ofApp::keyPressed(int key){
     switch(key)
     {
         case '1':
@@ -250,7 +250,7 @@ void testApp::keyPressed(int key){
         alignCameraToTrack();
     }
 }
-void testApp::saveSettings()
+void ofApp::saveSettings()
 {
 	cam.saveCameraPosition();
 	cameraTrack.save();
@@ -259,42 +259,42 @@ void testApp::saveSettings()
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){
+void ofApp::keyReleased(int key){
     
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
+void ofApp::mouseMoved(int x, int y ){
     
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
+void ofApp::mouseDragged(int x, int y, int button){
     
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
+void ofApp::mousePressed(int x, int y, int button){
     
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button){
+void ofApp::mouseReleased(int x, int y, int button){
     
 }
 
 //--------------------------------------------------------------
-void testApp::windowResized(int w, int h){
+void ofApp::windowResized(int w, int h){
     timeline.setWidth(w);
 	timeline.setOffset(ofVec2f(0, ofGetHeight() - timeline.getDrawRect().height));
 }
 
 //--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg){
+void ofApp::gotMessage(ofMessage msg){
     
 }
 
 //--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo){
+void ofApp::dragEvent(ofDragInfo dragInfo){
     
 }

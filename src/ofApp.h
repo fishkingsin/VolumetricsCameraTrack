@@ -7,7 +7,7 @@
 #include "ofxTLCameraTrack.h"
 #include "ofxGui.h"
 
-class testApp : public ofBaseApp{
+class ofApp : public ofBaseApp{
     
 public:
     void setup();
